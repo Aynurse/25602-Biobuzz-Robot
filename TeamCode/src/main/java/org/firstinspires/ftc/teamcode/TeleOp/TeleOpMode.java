@@ -1,3 +1,5 @@
+package org.firstinspires.ftc.teamcode.TeleOp;
+
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -31,7 +33,6 @@ public class TeleOpMode extends OpMode {
                 () -> -gamepad1.left_stick_x,
                 () -> -gamepad1.left_stick_y,
                 () -> -gamepad1.right_stick_x);
-        drivetrainCommand.schedule();
 
         intakeSubsystem = new IntakeSubsystem(hardwareMap);
         armSubsystem = new ArmSubsystem(hardwareMap);
@@ -52,8 +53,22 @@ public class TeleOpMode extends OpMode {
         currentGamepad1.copy(gamepad1);
 
 
-        if (currentGamepad1.a && !previousGamepad1.a) {
+        if (currentGamepad1.y && !previousGamepad1.y) {
             new ArmCommand(armSubsystem, targetTicks).schedule();
+        }
+
+        if (gamepad1.a) {
+            intakeSubsystem.startIntakeMotor();
+        }
+        else {
+            intakeSubsystem.stopIntakeMotor();
+        }
+
+        if (gamepad1.b) {
+            intakeSubsystem.turnIntakeServo();
+        }
+        else {
+            intakeSubsystem.stopIntakeServo();
         }
 
         CommandScheduler.getInstance().run();
@@ -63,6 +78,9 @@ public class TeleOpMode extends OpMode {
     public void stop() {
 
         CommandScheduler.getInstance().reset();
+        intakeSubsystem.stopIntakeMotor();
+        intakeSubsystem.stopIntakeServo();
+        armSubsystem.stopArm();
     }
 
 }

@@ -22,5 +22,13 @@ public class IntakeSubsystem {
         intakeServo.setPosition(0.5);
     }
 
+    public void startIntakeMotor() {
+        intakeMotor.setPower(1);
+    }
+
+    public void stopIntakeMotor() {
+        intakeMotor.setPower(0);
+    }
+
 
 }
