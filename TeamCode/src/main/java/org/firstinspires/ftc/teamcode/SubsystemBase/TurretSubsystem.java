@@ -36,7 +36,7 @@ public class TurretSubsystem {
 
     public boolean isAtTarget() {
        double currentAngle = getCurrentAngle();
-        if (abs(targetAngle - currentAngle) > 5 ) {
+        if (abs(targetAngle - currentAngle) < 5 ) {
             return true;
         }
         return false;
