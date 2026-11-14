@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.SubsystemBase.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommand;
 import org.firstinspires.ftc.teamcode.SubsystemBase.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.SubsystemBase.ArmSubsystem;
-import org.firstinspires.ftc.teamcode.Commands.ArmCommand;
+
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 @TeleOp
@@ -16,8 +15,6 @@ public class TeleOpMode extends OpMode {
 
     private DrivetrainSubsystem drivetrainSubsystem;
     private DrivetrainCommand drivetrainCommand;
-    private ArmSubsystem armSubsystem;
-    private ArmCommand armCommand;
     private IntakeSubsystem intakeSubsystem;
     private int targetTicks = 200;
     private Gamepad previousGamepad1 = new Gamepad();
@@ -35,8 +32,6 @@ public class TeleOpMode extends OpMode {
                 () -> -gamepad1.right_stick_x);
 
         intakeSubsystem = new IntakeSubsystem(hardwareMap);
-        armSubsystem = new ArmSubsystem(hardwareMap);
-        armCommand = new ArmCommand(armSubsystem, targetTicks);
     }
 
     @Override
@@ -54,7 +49,7 @@ public class TeleOpMode extends OpMode {
 
 
         if (currentGamepad1.y && !previousGamepad1.y) {
-            new ArmCommand(armSubsystem, targetTicks).schedule();
+
         }
 
         if (gamepad1.a) {
@@ -71,6 +66,13 @@ public class TeleOpMode extends OpMode {
             intakeSubsystem.stopIntakeServo();
         }
 
+        if (gamepad1.x) {
+            intakeSubsystem.lowerFlowerMechanicsm();
+        }
+        else {
+            intakeSubsystem.raiseFlowerMechanicsm();
+        }
+
         CommandScheduler.getInstance().run();
     }
 
@@ -80,7 +82,6 @@ public class TeleOpMode extends OpMode {
         CommandScheduler.getInstance().reset();
         intakeSubsystem.stopIntakeMotor();
         intakeSubsystem.stopIntakeServo();
-        armSubsystem.stopArm();
     }
 
 }

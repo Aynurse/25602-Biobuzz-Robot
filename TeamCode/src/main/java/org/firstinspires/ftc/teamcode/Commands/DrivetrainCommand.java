@@ -10,7 +10,8 @@ public class DrivetrainCommand extends CommandBase {
     private final DoubleSupplier doubleSuppliery;
     private final DoubleSupplier doubleSupplierrx;
 
-    DrivetrainSubsystem drivetrainSubsystem;
+
+    private final DrivetrainSubsystem drivetrainSubsystem;
 
     public  DrivetrainCommand(DrivetrainSubsystem drivetrainSubsystem, DoubleSupplier doubleSupplierx, DoubleSupplier doubleSuppliery, DoubleSupplier doubleSupplierrx) {
         this.doubleSupplierx = doubleSupplierx;
@@ -21,10 +22,12 @@ public class DrivetrainCommand extends CommandBase {
 
     }
 
+    @Override
     public void initialize() {
 
     }
 
+    @Override
     public  void execute(){
             double x = doubleSupplierx.getAsDouble();
             double y = doubleSuppliery.getAsDouble();
@@ -34,8 +37,15 @@ public class DrivetrainCommand extends CommandBase {
 
 
     }
+
+    @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        drivetrainSubsystem.stop();
     }
 
 }
